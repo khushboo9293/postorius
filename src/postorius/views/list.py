@@ -298,7 +298,8 @@ class ListUnsubscribeView(MailingListView):
     def get(self, request, *args, **kwargs):
         email = kwargs['email']
         try:
-            self.mailing_list.unsubscribe(email)
+            #pass the channel with email of member unsubscribing
+            self.mailing_list.unsubscribe(email, 'member options page') 
             messages.success(request,
                              '%s has been unsubscribed from this list.' %
                              email)
@@ -366,7 +367,8 @@ class ListMassRemovalView(MailingListView):
             for email in emails:
                 try:
                     validate_email(email)
-                    self.mailing_list.unsubscribe(email.lower())
+                    #pass the channel with email of member unsubscribing
+                    self.mailing_list.unsubscribe(email.lower(), 'admin mass removal')
                     messages.success(request,
                                     'The address %s has been unsubscribed from %s.' %
                                     (email, self.mailing_list.fqdn_listname))
